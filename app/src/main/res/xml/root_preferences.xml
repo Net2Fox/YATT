@@ -1,0 +1,28 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="@string/theme_header">
+
+        <!--<SwitchPreferenceCompat
+            app:key="sync"
+            app:title="@string/dark_theme_title"
+            app:widgetLayout="@layout/preference_material_switch"/>-->
+
+        <ListPreference
+            app:defaultValue="system"
+            app:entries="@array/dark_theme_entries"
+            app:entryValues="@array/dark_theme_values"
+            app:key="dark_theme"
+            app:title="@string/dark_theme_title"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/about_header">
+
+        <Preference
+            app:title="@string/version_title"
+            app:summary="@string/version_name"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

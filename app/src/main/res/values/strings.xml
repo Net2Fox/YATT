@@ -1,0 +1,44 @@
+<resources>
+    <string name="app_name" translatable="false">TrackerApp</string>
+    <string name="settings_menu_item">Settings</string>
+    <string name="tasks_menu_item">Tasks</string>
+    <string name="theme_header">Theme</string>
+
+    <!-- Preferences -->
+    <string name="about_header">About</string>
+    <string name="version_title">Version</string>
+    <string name="dark_theme_title">Dark theme</string>
+    <string name="dark_theme_system">System</string>
+    <string name="dark_theme_off">Off</string>
+    <string name="dark_theme_on">On</string>
+
+    <string name="create_list_hint">List name</string>
+    <string name="create_list_dialog_title">Enter the name of the list</string>
+    <string name="ok_dialog_button">OK</string>
+    <string name="cancel_dialog_button">Cancel</string>
+
+    <string name="activity_sample_code" translatable="false">ViewPager2 Demos</string>
+    <string name="label_orientation" translatable="false">Orientation:</string>
+    <string name="label_jump_to" translatable="false">Jump to:</string>
+    <string name="label_jump" translatable="false">Jump</string>
+    <string name="disable_user_input" translatable="false">Disable user input</string>
+    <string name="checkbox_smoothscroll" translatable="false">Smooth</string>
+    <string name="checkbox_rotate" translatable="false">Rotate</string>
+    <string name="checkbox_translate" translatable="false">Translate</string>
+    <string name="checkbox_scale" translatable="false">Scale</string>
+    <string name="increase_count" translatable="false">Count++</string>
+    <string name="count_colon" translatable="false">Count:</string>
+    <string name="id_colon" translatable="false">Id:</string>
+    <string name="add_new_before" translatable="false">Add new before</string>
+    <string name="add_new_after" translatable="false">Add new after</string>
+    <string name="remove_page" translatable="false">Remove page</string>
+    <string name="go_to_page" translatable="false">Go to page</string>
+    <string name="use_diff_util" translatable="false">Use DiffUtil:</string>
+    <string name="choose_a_page" translatable="false">Choose a page:</string>
+    <string name="toolbox" translatable="false">Toolbox</string>
+    <string name="viewpager2" translatable="false">ViewPager2</string>
+    <string name="first_rv" translatable="false">Horizontal RecyclerView</string>
+    <string name="second_rv" translatable="false">Vertical RecyclerView</string>
+    <string name="page_position" translatable="false">Page %1$d</string>
+    <string name="item_position" translatable="false">Item %1$d</string>
+</resources>
