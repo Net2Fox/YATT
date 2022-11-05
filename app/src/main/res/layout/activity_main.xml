@@ -17,7 +17,7 @@
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
-                app:title="@string/app_name"
+                app:title="@string/app_full_name"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:titleTextColor="?attr/colorOnPrimaryContainer" />
@@ -44,7 +44,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:menu="@menu/bottom_navigation_menu"
             tools:layout_editor_absoluteX="0dp"
-            />
+            app:itemRippleColor="@null"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

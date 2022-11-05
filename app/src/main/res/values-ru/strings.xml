@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="settings_menu_item">Настройки</string>
+    <!-- Нижнее меню -->
     <string name="tasks_menu_item">Задачи</string>
-    <string name="theme_header">Тема</string>
+    <string name="settings_menu_item">Настройки</string>
+
+    <!-- Настройки -->
     <string name="about_header">О приложении</string>
     <string name="version_title">Версия</string>
+    <string name="theme_header">Тема</string>
     <string name="dark_theme_title">Тёмная тема</string>
     <string name="dark_theme_system">Системная</string>
-    <string name="dark_theme_off">Выключена</string>
     <string name="dark_theme_on">Включена</string>
+    <string name="dark_theme_off">Выключена</string>
+
+    <!-- Всплывающее окно создания спика -->
     <string name="create_list_hint">Название списка</string>
     <string name="create_list_dialog_title">Введите название списка</string>
-    <string name="ok_dialog_button">ОК</string>
     <string name="cancel_dialog_button">Отмена</string>
+
+    <string name="create_list_tab">+ Создать список</string>
+    <string name="create_task_dialog_title">Введите название задачи</string>
+    <string name="create_task_hint">Название задачи</string>
 </resources>
