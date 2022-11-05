@@ -1,3 +1,1 @@
-# TrackerApp - Трекер задач
-
-Полностью учебный проект, который используется для практики в написании Android-приложений на Kotlin
+# YATT - Yet Another Task Tracker
