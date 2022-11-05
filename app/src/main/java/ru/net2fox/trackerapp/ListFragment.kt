@@ -3,7 +3,6 @@ package ru.net2fox.trackerapp
 import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -13,7 +12,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.DiffUtil
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.android.material.textfield.TextInputEditText
@@ -41,19 +39,23 @@ class ListFragment : Fragment() {
         binding.fab.setOnClickListener {
             val builder = MaterialAlertDialogBuilder(requireContext())
             builder.setTitle(R.string.create_task_dialog_title)
-            val view1: View = inflater.inflate(R.layout.create_alertdialog, null, false)
-            view1.findViewById<TextInputLayout>(R.id.textInputLayout).hint = getString(R.string.create_task_hint)
-            builder.setView(view1)
-            builder.setPositiveButton(R.string.ok_dialog_button,
-                DialogInterface.OnClickListener { dialog, which ->
-                    val taskNameEditText: TextInputEditText? = (dialog as AlertDialog).findViewById(R.id.editText)
+            val dialogView: View = inflater.inflate(R.layout.create_alertdialog, null, false)
+            dialogView.findViewById<TextInputLayout>(R.id.textInputLayout).hint = getString(R.string.create_task_hint)
+            builder.setView(dialogView)
+            builder.setPositiveButton(R.string.ok_dialog_button, null)
+            builder.setNegativeButton(R.string.cancel_dialog_button, null)
+            val alertDialog: AlertDialog = builder.create();
+            alertDialog.show();
+            alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+                val taskNameEditText: TextInputEditText? = dialogView.findViewById(R.id.editText)
+                val wantToCloseDialog: Boolean = taskNameEditText?.text.toString().trim().isEmpty()
+                // Если EditText пуст, отключите закрытие при нажатии на позитивную кнопку
+                if (!wantToCloseDialog) {
+                    alertDialog.dismiss()
                     trackerViewModel.getListId(binding.tabs.selectedTabPosition)
                         ?.let { trackerViewModel.addTask(taskNameEditText?.text.toString(), it) }
-                   // changeDataSet { trackerViewModel.addList(taskNameEditText?.text.toString()) }
-                })
-            builder.setNegativeButton(R.string.cancel_dialog_button,
-                DialogInterface.OnClickListener { dialog, which -> dialog.cancel() })
-            builder.show()
+                }
+            }
         }
         TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
             tab.text = trackerViewModel.getListById(position)?.list?.name
@@ -80,6 +82,12 @@ class ListFragment : Fragment() {
             binding.viewPager.setCurrentItem(trackerViewModel.listSize ?: 0, false)
         binding.tabs.addTab(binding.tabs.newTab().setText(R.string.create_list_tab))
         setTouchListenerToTab()
+        //if(binding.tabs.size <= 1) {
+        //    binding.fab.visibility = View.INVISIBLE
+        //}
+        //else if(binding.tabs.size > 1) {
+        //    binding.fab.visibility = View.VISIBLE
+        //}
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -94,16 +102,21 @@ class ListFragment : Fragment() {
                         if(i == binding.tabs.tabCount - 1) {
                             val builder = MaterialAlertDialogBuilder(requireContext())
                             builder.setTitle(R.string.create_list_dialog_title)
-                            builder.setView(R.layout.create_alertdialog)
-                            builder.setPositiveButton(R.string.ok_dialog_button,
-                                DialogInterface.OnClickListener { dialog, which ->
-                                    val listNameEditText: TextInputEditText? = (dialog as AlertDialog).findViewById(R.id.editText)
+                            val dialogView: View = layoutInflater.inflate(R.layout.create_alertdialog, null, false)
+                            builder.setView(dialogView)
+                            builder.setPositiveButton(R.string.ok_dialog_button, null)
+                            builder.setNegativeButton(R.string.cancel_dialog_button, null)
+                            val alertDialog: AlertDialog = builder.create();
+                            alertDialog.show();
+                            alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+                                val listNameEditText: TextInputEditText? = dialogView.findViewById(R.id.editText)
+                                val wantToCloseDialog: Boolean = listNameEditText?.text.toString().trim().isEmpty()
+                                // Если EditText пуст, отключите закрытие при нажатии на позитивную кнопку
+                                if (!wantToCloseDialog) {
+                                    alertDialog.dismiss()
                                     trackerViewModel.addList(listNameEditText?.text.toString())
-                                    //changeDataSet ({ trackerViewModel.addList(listNameEditText?.text.toString()) }, true)
-                                })
-                            builder.setNegativeButton(R.string.cancel_dialog_button,
-                                DialogInterface.OnClickListener { dialog, which -> dialog.cancel() })
-                            builder.show()
+                                }
+                            }
                             return@setOnTouchListener true
                         }
                     }
