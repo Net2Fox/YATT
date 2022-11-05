@@ -2,7 +2,6 @@ package ru.net2fox.trackerapp.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.util.UUID
 
 @Entity
 data class Task(

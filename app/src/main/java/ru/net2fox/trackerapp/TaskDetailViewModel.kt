@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import ru.net2fox.trackerapp.database.ListOfTasks
 import ru.net2fox.trackerapp.database.ListsTasks
 import ru.net2fox.trackerapp.database.Task
 
@@ -12,8 +11,6 @@ class TaskDetailViewModel() : ViewModel() {
 
     private val trackerRepository = TrackerRepository.get()
     private val listIdLiveData = MutableLiveData<Int>()
-
-    private lateinit var tasks: List<Task>
 
     val listTasksLiveData: LiveData<ListsTasks> =
         Transformations.switchMap(listIdLiveData) { listId ->

@@ -1,7 +1,6 @@
 package ru.net2fox.trackerapp
 
 import android.annotation.SuppressLint
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -17,7 +16,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import ru.net2fox.trackerapp.databinding.FragmentListBinding
-
 
 private const val KEY_SELECTED_TAB_INDEX = "ru.net2fox.trackerapp.SELECTED_TAB_INDEX"
 
@@ -44,8 +42,8 @@ class ListFragment : Fragment() {
             builder.setView(dialogView)
             builder.setPositiveButton(R.string.ok_dialog_button, null)
             builder.setNegativeButton(R.string.cancel_dialog_button, null)
-            val alertDialog: AlertDialog = builder.create();
-            alertDialog.show();
+            val alertDialog: AlertDialog = builder.create()
+            alertDialog.show()
             alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
                 val taskNameEditText: TextInputEditText? = dialogView.findViewById(R.id.editText)
                 val wantToCloseDialog: Boolean = taskNameEditText?.text.toString().trim().isEmpty()
@@ -82,12 +80,14 @@ class ListFragment : Fragment() {
             binding.viewPager.setCurrentItem(trackerViewModel.listSize ?: 0, false)
         binding.tabs.addTab(binding.tabs.newTab().setText(R.string.create_list_tab))
         setTouchListenerToTab()
-        //if(binding.tabs.size <= 1) {
-        //    binding.fab.visibility = View.INVISIBLE
-        //}
-        //else if(binding.tabs.size > 1) {
-        //    binding.fab.visibility = View.VISIBLE
-        //}
+        if(trackerViewModel.listSize == 0) {
+            binding.fab.visibility = View.INVISIBLE
+            binding.tabs.setSelectedTabIndicatorHeight(((0 * resources.displayMetrics.density).toInt()))
+        }
+        else if(trackerViewModel.listSize != 0) {
+            binding.fab.visibility = View.VISIBLE
+            binding.tabs.setSelectedTabIndicatorHeight(((3 * resources.displayMetrics.density).toInt()))
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -97,7 +97,7 @@ class ListFragment : Fragment() {
             val childCount = tabStrip.childCount
             for (i in 0 until childCount) {
                 val tabView = tabStrip.getChildAt(i)
-                tabView.setOnTouchListener { v, event ->
+                tabView.setOnTouchListener { _, event ->
                     if (event.action == MotionEvent.ACTION_UP){
                         if(i == binding.tabs.tabCount - 1) {
                             val builder = MaterialAlertDialogBuilder(requireContext())
@@ -106,8 +106,8 @@ class ListFragment : Fragment() {
                             builder.setView(dialogView)
                             builder.setPositiveButton(R.string.ok_dialog_button, null)
                             builder.setNegativeButton(R.string.cancel_dialog_button, null)
-                            val alertDialog: AlertDialog = builder.create();
-                            alertDialog.show();
+                            val alertDialog: AlertDialog = builder.create()
+                            alertDialog.show()
                             alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
                                 val listNameEditText: TextInputEditText? = dialogView.findViewById(R.id.editText)
                                 val wantToCloseDialog: Boolean = listNameEditText?.text.toString().trim().isEmpty()
@@ -128,6 +128,6 @@ class ListFragment : Fragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putInt(KEY_SELECTED_TAB_INDEX, binding.tabs.selectedTabPosition)
+        if(::binding.isInitialized) outState.putInt(KEY_SELECTED_TAB_INDEX, binding.tabs.selectedTabPosition)
     }
 }

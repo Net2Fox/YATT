@@ -1,26 +1,18 @@
 package ru.net2fox.trackerapp
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.divider.MaterialDividerItemDecoration
 import ru.net2fox.trackerapp.database.Task
-import ru.net2fox.trackerapp.databinding.FragmentListBinding
 import ru.net2fox.trackerapp.databinding.FragmentTaskBinding
 
 private const val KEY_LIST_ID = "ru.net2fox.trackerapp.LIST_ID"
@@ -37,7 +29,7 @@ class TaskFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_task, container, false)
         val view = binding.root
         binding.recyclerViewTasks.layoutManager = LinearLayoutManager(context)

@@ -9,8 +9,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey)
-        var preferencesChangeListener: SharedPreferences.OnSharedPreferenceChangeListener
-        var listener = SharedPreferences.OnSharedPreferenceChangeListener { prefs, key ->
+        val listener = SharedPreferences.OnSharedPreferenceChangeListener { prefs, key ->
             if (prefs.getString("dark_theme", "").toString() == "system") {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
             } else if (prefs.getString("dark_theme", "").toString() == "on") {
@@ -19,7 +18,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
         }
-        preferenceScreen.sharedPreferences
-            ?.registerOnSharedPreferenceChangeListener(listener)
+        preferenceScreen.sharedPreferences?.registerOnSharedPreferenceChangeListener(listener)
     }
 }
