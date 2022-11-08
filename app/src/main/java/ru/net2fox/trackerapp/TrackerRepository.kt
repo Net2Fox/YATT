@@ -13,7 +13,7 @@ import kotlin.collections.List
 private const val DATABASE_NAME = "tracker-database"
 
 class TrackerRepository private constructor(context: Context) {
-    private val database : TrackerDatabase = Room.databaseBuilder(
+    private val database: TrackerDatabase = Room.databaseBuilder(
         context.applicationContext,
         TrackerDatabase::class.java,
         DATABASE_NAME
@@ -25,9 +25,12 @@ class TrackerRepository private constructor(context: Context) {
     fun getTasks(): LiveData<List<Task>> = trackerDao.getTasks()
     fun getTask(id: Int): LiveData<Task?> = trackerDao.getTask(id)
 
+    fun getLists(): LiveData<List<ListOfTasks>> = trackerDao.getLists()
+    fun getList(id: Int): LiveData<ListOfTasks?> = trackerDao.getList(id)
+
     fun getListsWithTasks(): LiveData<List<ListsTasks>> = trackerDao.getListsWithTasks()
 
-    fun getListWithTasksById(id: Int) : LiveData<ListsTasks> = trackerDao.getListWithTasksById(id)
+    fun getListWithTasks(id: Int) : LiveData<ListsTasks> = trackerDao.getListWithTasks(id)
 
     fun updateList(list: ListOfTasks) {
         executor.execute {
@@ -41,6 +44,18 @@ class TrackerRepository private constructor(context: Context) {
         }
     }
 
+    fun deleteList(list: ListOfTasks) {
+        executor.execute {
+            trackerDao.deleteList(list)
+        }
+    }
+
+    fun deleteListWithTasks(list: ListOfTasks, tasks: List<Task>) {
+        executor.execute {
+            trackerDao.deleteListWithTasks(list, tasks)
+        }
+    }
+
     fun updateTask(task: Task) {
         executor.execute {
             trackerDao.updateTask(task)
@@ -50,6 +65,12 @@ class TrackerRepository private constructor(context: Context) {
     fun insertTask(task: Task) {
         executor.execute {
             trackerDao.insertTask(task)
+        }
+    }
+
+    fun deleteTask(task: Task) {
+        executor.execute {
+            trackerDao.deleteTask(task)
         }
     }
 

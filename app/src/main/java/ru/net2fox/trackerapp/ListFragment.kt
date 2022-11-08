@@ -2,10 +2,8 @@ package ru.net2fox.trackerapp
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -16,6 +14,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import ru.net2fox.trackerapp.databinding.FragmentListBinding
+import ru.net2fox.trackerapp.viewmodel.ListsViewModel
 
 private const val KEY_SELECTED_TAB_INDEX = "ru.net2fox.trackerapp.SELECTED_TAB_INDEX"
 
@@ -24,7 +23,49 @@ class ListFragment : Fragment() {
     private lateinit var binding: FragmentListBinding
     private lateinit var adapter: ViewPagerAdapter
 
-    private val trackerViewModel: TrackerViewModel by viewModels()
+    private val listsViewModel: ListsViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.appbar_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == R.id.action_rename) {
+            val builder = MaterialAlertDialogBuilder(requireContext())
+            builder.setTitle(R.string.create_list_dialog_title)
+            val dialogView: View = layoutInflater.inflate(R.layout.create_alertdialog, null, false)
+            builder.setView(dialogView)
+            builder.setPositiveButton(R.string.ok_dialog_button, null)
+            builder.setNegativeButton(R.string.cancel_dialog_button, null)
+            val alertDialog: AlertDialog = builder.create()
+            alertDialog.show()
+            alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+                val listNameEditText: TextInputEditText? = dialogView.findViewById(R.id.editText)
+                val wantToCloseDialog: Boolean = listNameEditText?.text.toString().trim().isEmpty()
+                // Если EditText пуст, отключите закрытие при нажатии на позитивную кнопку
+                if (!wantToCloseDialog) {
+                    alertDialog.dismiss()
+                    val changedList = listsViewModel.getListById(binding.tabs.selectedTabPosition)?.list
+                    if(changedList != null) {
+                        changedList.name = listNameEditText?.text.toString()
+                        listsViewModel.updateList(changedList)
+                    }
+
+                }
+            }
+        }
+        else if(item.itemId == R.id.action_delete) {
+            listsViewModel.getListById(binding.tabs.selectedTabPosition)
+                ?.let { listsViewModel.deleteListWithTasks(it) }
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,7 +73,7 @@ class ListFragment : Fragment() {
     ): View {
         binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_list, container, false)
         val view = binding.root
-        adapter = ViewPagerAdapter(childFragmentManager, lifecycle, trackerViewModel)
+        adapter = ViewPagerAdapter(childFragmentManager, lifecycle, listsViewModel)
         binding.viewPager.adapter = adapter
         binding.fab.setOnClickListener {
             val builder = MaterialAlertDialogBuilder(requireContext())
@@ -50,18 +91,18 @@ class ListFragment : Fragment() {
                 // Если EditText пуст, отключите закрытие при нажатии на позитивную кнопку
                 if (!wantToCloseDialog) {
                     alertDialog.dismiss()
-                    trackerViewModel.getListId(binding.tabs.selectedTabPosition)
-                        ?.let { trackerViewModel.addTask(taskNameEditText?.text.toString(), it) }
+                    listsViewModel.getListId(binding.tabs.selectedTabPosition)
+                        ?.let { listsViewModel.addTask(taskNameEditText?.text.toString(), it) }
                 }
             }
         }
         TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
-            tab.text = trackerViewModel.getListById(position)?.list?.name
+            tab.text = listsViewModel.getListById(position)?.list?.name
         }.attach()
         binding.tabs.selectTab(binding.tabs.getTabAt(savedInstanceState?.getInt(KEY_SELECTED_TAB_INDEX) ?: 0))
         binding.tabs.addTab(binding.tabs.newTab().setText(R.string.create_list_tab))
         setTouchListenerToTab()
-        trackerViewModel.listsWithTasksLiveData.observe(
+        listsViewModel.listsWithTasksLiveData.observe(
             viewLifecycleOwner,
             Observer { listTasks ->
                 listTasks?.let {
@@ -77,14 +118,14 @@ class ListFragment : Fragment() {
         performChanges()
         binding.viewPager.adapter!!.notifyDataSetChanged()
         if(isNewListAdd)
-            binding.viewPager.setCurrentItem(trackerViewModel.listSize ?: 0, false)
+            binding.viewPager.setCurrentItem(listsViewModel.listSize ?: 0, false)
         binding.tabs.addTab(binding.tabs.newTab().setText(R.string.create_list_tab))
         setTouchListenerToTab()
-        if(trackerViewModel.listSize == 0) {
+        if(listsViewModel.listSize == 0) {
             binding.fab.visibility = View.INVISIBLE
             binding.tabs.setSelectedTabIndicatorHeight(((0 * resources.displayMetrics.density).toInt()))
         }
-        else if(trackerViewModel.listSize != 0) {
+        else if(listsViewModel.listSize != 0) {
             binding.fab.visibility = View.VISIBLE
             binding.tabs.setSelectedTabIndicatorHeight(((3 * resources.displayMetrics.density).toInt()))
         }
@@ -114,7 +155,7 @@ class ListFragment : Fragment() {
                                 // Если EditText пуст, отключите закрытие при нажатии на позитивную кнопку
                                 if (!wantToCloseDialog) {
                                     alertDialog.dismiss()
-                                    trackerViewModel.addList(listNameEditText?.text.toString())
+                                    listsViewModel.addList(listNameEditText?.text.toString())
                                 }
                             }
                             return@setOnTouchListener true

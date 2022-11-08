@@ -1,19 +1,23 @@
-package ru.net2fox.trackerapp
+package ru.net2fox.trackerapp.viewmodel
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import ru.net2fox.trackerapp.TrackerRepository
 import ru.net2fox.trackerapp.database.ListOfTasks
 import ru.net2fox.trackerapp.database.ListsTasks
 import ru.net2fox.trackerapp.database.Task
 
-class TrackerViewModel : ViewModel() {
+class ListsViewModel : ViewModel() {
 
     private val trackerRepository = TrackerRepository.get()
-    val listsWithTasksLiveData = trackerRepository.getListsWithTasks()
+
+    var listsWithTasksLiveData = trackerRepository.getListsWithTasks()
 
     fun getListById(id: Int): ListsTasks? = listsWithTasksLiveData.value?.get(id)
+    fun getListByListId(listId: Int): ListsTasks? = listsWithTasksLiveData.value?.find { it -> it.list.listId == listId }
     fun getListId(position: Int): Int? = listsWithTasksLiveData.value?.get(position)?.list?.listId
-    fun contains(itemId: Int): Boolean = listsWithTasksLiveData.value?.contains(getListById(itemId)) ?: false
-    fun createIdSnapshot(): List<ListsTasks?> = (0 until listSize!!).map { position -> getListById(position) }
+    fun contains(itemId: Int): Boolean = listsWithTasksLiveData.value?.contains(getListByListId(itemId)) ?: false
     val listSize: Int? get() = listsWithTasksLiveData.value?.size
 
 
@@ -23,6 +27,10 @@ class TrackerViewModel : ViewModel() {
 
     fun updateList(list: ListOfTasks) {
         trackerRepository.updateList(list)
+    }
+
+    fun deleteListWithTasks(list: ListsTasks) {
+        trackerRepository.deleteListWithTasks(list.list, list.tasks)
     }
 
     fun addTask(taskName: String, ownerId: Int) {

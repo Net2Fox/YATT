@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ru.net2fox.trackerapp.database.Task
 import ru.net2fox.trackerapp.databinding.FragmentTaskBinding
+import ru.net2fox.trackerapp.viewmodel.TasksViewModel
 
 private const val KEY_LIST_ID = "ru.net2fox.trackerapp.LIST_ID"
 
@@ -24,7 +25,7 @@ class TaskFragment : Fragment() {
     private lateinit var binding: FragmentTaskBinding
     private lateinit var adapter: TaskRecyclerViewAdapter
 
-    private val taskDetailViewModel: TaskDetailViewModel by viewModels()
+    private val tasksViewModel: TasksViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,9 +36,9 @@ class TaskFragment : Fragment() {
         binding.recyclerViewTasks.layoutManager = LinearLayoutManager(context)
         //val divider = MaterialDividerItemDecoration(view.context, LinearLayoutManager.VERTICAL)
         //binding.recyclerViewTasks.addItemDecoration(divider)
-        adapter = TaskRecyclerViewAdapter(taskDetailViewModel)
+        adapter = TaskRecyclerViewAdapter(tasksViewModel)
         binding.recyclerViewTasks.adapter = adapter
-        taskDetailViewModel.listTasksLiveData.observe(
+        tasksViewModel.listTasksLiveData.observe(
             viewLifecycleOwner,
             Observer { tasks ->
                 tasks?.let {
@@ -47,7 +48,7 @@ class TaskFragment : Fragment() {
             }
         )
         val listId = arguments?.getInt(KEY_LIST_ID) ?: throw IllegalStateException()
-        taskDetailViewModel.loadTasks(listId)
+        tasksViewModel.loadTasks(listId)
         return view
     }
 
@@ -74,12 +75,12 @@ class TaskFragment : Fragment() {
             checkBoxView.isChecked = task.isDone
             checkBoxView.setOnCheckedChangeListener { buttonView, isChecked ->
                 task.isDone = checkBoxView.isChecked
-                taskDetailViewModel.saveTask(task)
+                tasksViewModel.saveTask(task)
             }
         }
     }
 
-    private inner class TaskRecyclerViewAdapter(private val taskDetailViewModel: TaskDetailViewModel) : RecyclerView.Adapter<TaskViewHolder>() {
+        private inner class TaskRecyclerViewAdapter(private val taskDetailViewModel: TasksViewModel) : RecyclerView.Adapter<TaskViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
             val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_task, parent, false)
