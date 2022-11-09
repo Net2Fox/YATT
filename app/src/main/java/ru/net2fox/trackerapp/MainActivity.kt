@@ -4,8 +4,6 @@ import android.app.Activity
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil
@@ -35,16 +33,4 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
         navView.setupWithNavController(navController)
     }
-
-    //override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-    //    menuInflater.inflate(R.menu.appbar_menu, menu)
-    //    return super.onCreateOptionsMenu(menu)
-    //}
-
-    //override fun onOptionsItemSelected(item: MenuItem): Boolean {
-    //    if(item.itemId == R.id.action_delete) {
-
-    //    }
-    //    return super.onOptionsItemSelected(item)
-    //}
 }

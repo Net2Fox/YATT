@@ -3,7 +3,6 @@ package ru.net2fox.trackerapp
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.*
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -24,48 +23,6 @@ class ListFragment : Fragment() {
     private lateinit var adapter: ViewPagerAdapter
 
     private val listsViewModel: ListsViewModel by viewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.appbar_menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == R.id.action_rename) {
-            val builder = MaterialAlertDialogBuilder(requireContext())
-            builder.setTitle(R.string.create_list_dialog_title)
-            val dialogView: View = layoutInflater.inflate(R.layout.create_alertdialog, null, false)
-            builder.setView(dialogView)
-            builder.setPositiveButton(R.string.ok_dialog_button, null)
-            builder.setNegativeButton(R.string.cancel_dialog_button, null)
-            val alertDialog: AlertDialog = builder.create()
-            alertDialog.show()
-            alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
-                val listNameEditText: TextInputEditText? = dialogView.findViewById(R.id.editText)
-                val wantToCloseDialog: Boolean = listNameEditText?.text.toString().trim().isEmpty()
-                // Если EditText пуст, отключите закрытие при нажатии на позитивную кнопку
-                if (!wantToCloseDialog) {
-                    alertDialog.dismiss()
-                    val changedList = listsViewModel.getListById(binding.tabs.selectedTabPosition)?.list
-                    if(changedList != null) {
-                        changedList.name = listNameEditText?.text.toString()
-                        listsViewModel.updateList(changedList)
-                    }
-
-                }
-            }
-        }
-        else if(item.itemId == R.id.action_delete) {
-            listsViewModel.getListById(binding.tabs.selectedTabPosition)
-                ?.let { listsViewModel.deleteListWithTasks(it) }
-        }
-        return super.onOptionsItemSelected(item)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -14,7 +14,7 @@ android {
         minSdk 21
         targetSdk 33
         versionCode 1
-        versionName "1.0-beta"
+        versionName "1.0.1-beta"
         resConfigs("en", "ru")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

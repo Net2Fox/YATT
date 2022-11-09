@@ -21,6 +21,4 @@
     <string name="create_list_tab">+ Создать список</string>
     <string name="create_task_dialog_title">Введите название задачи</string>
     <string name="create_task_hint">Название задачи</string>
-    <string name="appbar_menu_delete_list">Удалить список</string>
-    <string name="appbar_menu_rename_list">Изменить название</string>
 </resources>

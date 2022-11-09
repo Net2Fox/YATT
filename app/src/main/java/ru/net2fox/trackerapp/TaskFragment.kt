@@ -2,12 +2,10 @@ package ru.net2fox.trackerapp
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -36,8 +34,6 @@ class TaskFragment : Fragment() {
         binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_task, container, false)
         val view = binding.root
         binding.recyclerViewTasks.layoutManager = LinearLayoutManager(context)
-        //val divider = MaterialDividerItemDecoration(view.context, LinearLayoutManager.VERTICAL)
-        //binding.recyclerViewTasks.addItemDecoration(divider)
         adapter = TaskRecyclerViewAdapter(tasksViewModel)
         binding.recyclerViewTasks.adapter = adapter
         tasksViewModel.listTasksLiveData.observe(
@@ -58,11 +54,6 @@ class TaskFragment : Fragment() {
     private fun changeDataSet(performChanges: () -> Unit) {
         performChanges()
         binding.recyclerViewTasks.adapter!!.notifyDataSetChanged()
-        //setTouchListenerToItem()
-    }
-
-    fun setTouchListenerToItem() {
-
     }
 
     private inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
@@ -79,11 +70,6 @@ class TaskFragment : Fragment() {
             this.task = task
             checkBoxView.text = task.name
             checkBoxView.isChecked = task.isDone
-            //checkBoxView.setOnCheckedChangeListener(null)
-            //checkBoxView.setOnCheckedChangeListener { buttonView, isChecked ->
-            //    task.isDone = checkBoxView.isChecked
-            //    tasksViewModel.saveTask(task)
-            //}
         }
 
         override fun onClick(v: View) {
