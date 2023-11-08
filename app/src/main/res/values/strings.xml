@@ -24,7 +24,6 @@
     <string name="create_task_hint">Task name</string>
     <string name="app_full_name" translatable="false">Yet Another Task Tracker</string>
     <string name="app_name_label" translatable="false">YATT</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="appbar_menu_delete_list">Delete list</string>
     <string name="appbar_menu_rename_list">Change name</string>
 </resources>
