@@ -1,9 +1,10 @@
-package ru.net2fox.trackerapp
+package ru.net2fox.trackerapp.old
 
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.PreferenceFragmentCompat
+import ru.net2fox.trackerapp.R
 
 class SettingsFragment : PreferenceFragmentCompat() {
 

@@ -1,9 +1,9 @@
-package ru.net2fox.trackerapp
+package ru.net2fox.trackerapp.old
 
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import ru.net2fox.trackerapp.viewmodel.ListsViewModel
+import ru.net2fox.trackerapp.old.viewmodel.ListsViewModel
 
 class ViewPagerAdapter(fm: FragmentManager, lifecycle: Lifecycle, private val listsViewModel: ListsViewModel) : FragmentStateAdapter(fm, lifecycle) {
 

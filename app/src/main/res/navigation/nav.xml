@@ -7,11 +7,11 @@
 
     <fragment
         android:id="@+id/listFragment"
-        android:name="ru.net2fox.trackerapp.ListFragment"
+        android:name="ru.net2fox.trackerapp.old.ListFragment"
         android:label="@string/tasks_menu_item"
         tools:layout="@layout/fragment_list" />
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="ru.net2fox.trackerapp.SettingsFragment"
+        android:name="ru.net2fox.trackerapp.old.SettingsFragment"
         android:label="@string/settings_menu_item" />
 </navigation>

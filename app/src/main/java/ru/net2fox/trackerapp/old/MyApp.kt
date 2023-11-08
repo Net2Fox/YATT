@@ -1,4 +1,4 @@
-package ru.net2fox.trackerapp
+package ru.net2fox.trackerapp.old
 
 import android.app.Application
 import com.google.android.material.color.DynamicColors

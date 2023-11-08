@@ -1,12 +1,12 @@
-package ru.net2fox.trackerapp
+package ru.net2fox.trackerapp.old
 
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.room.Room
-import ru.net2fox.trackerapp.database.ListOfTasks
-import ru.net2fox.trackerapp.database.ListsTasks
-import ru.net2fox.trackerapp.database.Task
-import ru.net2fox.trackerapp.database.TrackerDatabase
+import ru.net2fox.trackerapp.old.database.ListOfTasks
+import ru.net2fox.trackerapp.old.database.ListsTasks
+import ru.net2fox.trackerapp.old.database.Task
+import ru.net2fox.trackerapp.old.database.TrackerDatabase
 import java.util.concurrent.Executors
 import kotlin.collections.List
 

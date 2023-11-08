@@ -1,4 +1,4 @@
-package ru.net2fox.trackerapp.database
+package ru.net2fox.trackerapp.old.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

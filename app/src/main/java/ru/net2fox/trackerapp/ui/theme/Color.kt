@@ -1,4 +1,4 @@
-package ru.net2fox.trackerapp.nw.ui.theme
+package ru.net2fox.trackerapp.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

@@ -1,12 +1,10 @@
-package ru.net2fox.trackerapp.viewmodel
+package ru.net2fox.trackerapp.old.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import ru.net2fox.trackerapp.TrackerRepository
-import ru.net2fox.trackerapp.database.ListOfTasks
-import ru.net2fox.trackerapp.database.ListsTasks
-import ru.net2fox.trackerapp.database.Task
+import ru.net2fox.trackerapp.old.TrackerRepository
+import ru.net2fox.trackerapp.old.database.ListOfTasks
+import ru.net2fox.trackerapp.old.database.ListsTasks
+import ru.net2fox.trackerapp.old.database.Task
 
 class ListsViewModel : ViewModel() {
 

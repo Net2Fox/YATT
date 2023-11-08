@@ -1,4 +1,4 @@
-package ru.net2fox.trackerapp.nw.ui.theme
+package ru.net2fox.trackerapp.ui.theme
 
 import android.app.Activity
 import android.os.Build

@@ -1,9 +1,8 @@
-package ru.net2fox.trackerapp
+package ru.net2fox.trackerapp.old
 
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.*
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -13,8 +12,9 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import ru.net2fox.trackerapp.R
 import ru.net2fox.trackerapp.databinding.FragmentListBinding
-import ru.net2fox.trackerapp.viewmodel.ListsViewModel
+import ru.net2fox.trackerapp.old.viewmodel.ListsViewModel
 
 private const val KEY_SELECTED_TAB_INDEX = "ru.net2fox.trackerapp.SELECTED_TAB_INDEX"
 
@@ -99,7 +99,9 @@ class ListFragment : Fragment() {
         TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
             tab.text = listsViewModel.getListById(position)?.list?.name
         }.attach()
-        binding.tabs.selectTab(binding.tabs.getTabAt(savedInstanceState?.getInt(KEY_SELECTED_TAB_INDEX) ?: 0))
+        binding.tabs.selectTab(binding.tabs.getTabAt(savedInstanceState?.getInt(
+            KEY_SELECTED_TAB_INDEX
+        ) ?: 0))
         binding.tabs.addTab(binding.tabs.newTab().setText(R.string.create_list_tab))
         setTouchListenerToTab()
         listsViewModel.listsWithTasksLiveData.observe(

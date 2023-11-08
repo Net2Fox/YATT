@@ -1,22 +1,21 @@
-package ru.net2fox.trackerapp
+package ru.net2fox.trackerapp.old
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import ru.net2fox.trackerapp.database.Task
+import ru.net2fox.trackerapp.R
+import ru.net2fox.trackerapp.old.database.Task
 import ru.net2fox.trackerapp.databinding.FragmentTaskBinding
-import ru.net2fox.trackerapp.viewmodel.TasksViewModel
+import ru.net2fox.trackerapp.old.viewmodel.TasksViewModel
 
 private const val KEY_LIST_ID = "ru.net2fox.trackerapp.LIST_ID"
 

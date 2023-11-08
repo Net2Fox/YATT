@@ -1,7 +1,7 @@
-package ru.net2fox.trackerapp.viewmodel
+package ru.net2fox.trackerapp.old.viewmodel
 
-import ru.net2fox.trackerapp.TrackerRepository
-import ru.net2fox.trackerapp.database.ListOfTasks
+import ru.net2fox.trackerapp.old.TrackerRepository
+import ru.net2fox.trackerapp.old.database.ListOfTasks
 
 class MainActivityViewModel {
     private val trackerRepository = TrackerRepository.get()
