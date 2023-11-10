@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">TrackerApp</string>
+    <string name="app_name" translatable="false">YATT</string>
     <!-- Bottom menu -->
     <string name="settings_menu_item">Settings</string>
     <string name="tasks_menu_item">Tasks</string>
@@ -23,7 +23,6 @@
     <string name="create_task_dialog_title">Enter the name of the task</string>
     <string name="create_task_hint">Task name</string>
     <string name="app_full_name" translatable="false">Yet Another Task Tracker</string>
-    <string name="app_name_label" translatable="false">YATT</string>
     <string name="appbar_menu_delete_list">Delete list</string>
     <string name="appbar_menu_rename_list">Change name</string>
 </resources>

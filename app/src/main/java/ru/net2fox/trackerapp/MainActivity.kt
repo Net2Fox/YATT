@@ -3,18 +3,34 @@ package ru.net2fox.trackerapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import ru.net2fox.trackerapp.data.repository.TaskListRepository
+import ru.net2fox.trackerapp.data.repository.TaskRepository
+import ru.net2fox.trackerapp.ui.navigation.NavGraph
+import ru.net2fox.trackerapp.ui.task.TaskViewModel
+import ru.net2fox.trackerapp.ui.task.TaskViewModelFactory
+import ru.net2fox.trackerapp.ui.tasklist.TaskListViewModel
+import ru.net2fox.trackerapp.ui.tasklist.TaskListViewModelFactory
 import ru.net2fox.trackerapp.ui.theme.TrackerAppTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val taskListDao = (application as TrackerApp).database.taskListDao()
+        val taskListRepository = TaskListRepository(taskListDao)
+        val taskListViewModelFactory = TaskListViewModelFactory(taskListRepository)
+        val taskListViewModel: TaskListViewModel by viewModels { taskListViewModelFactory }
+
+        val taskDao = (application as TrackerApp).database.taskDao()
+        val taskRepository = TaskRepository(taskDao)
+        val taskViewModelFactory = TaskViewModelFactory(taskRepository)
+        val taskViewModel: TaskViewModel by viewModels { taskViewModelFactory }
+
         setContent {
             TrackerAppTheme {
                 // A surface container using the 'background' color from the theme
@@ -22,25 +38,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+                    NavGraph(taskListViewModel, taskViewModel)
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    TrackerAppTheme {
-        Greeting("Android")
     }
 }
