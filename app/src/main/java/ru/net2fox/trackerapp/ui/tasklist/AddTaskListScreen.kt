@@ -1,6 +1,7 @@
 package ru.net2fox.trackerapp.ui.tasklist
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -20,10 +21,10 @@ import ru.net2fox.trackerapp.intent.TaskListIntent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddTaskListScreen(viewModel: TaskListViewModel, navController: NavController) {
+fun AddTaskListScreen(viewModel: TaskListViewModel, navController: NavController, innerPadding: PaddingValues) {
     var listName by remember { mutableStateOf("") }
 
-    Column(modifier = Modifier.padding(16.dp)) {
+    Column(modifier = Modifier.padding(innerPadding).padding(16.dp)) {
         TextField(
             value = listName,
             onValueChange = { listName = it },

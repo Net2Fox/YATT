@@ -2,6 +2,7 @@ package ru.net2fox.trackerapp.ui.task
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -22,14 +23,14 @@ import ru.net2fox.trackerapp.intent.TaskIntent
 import ru.net2fox.trackerapp.ui.navigation.Screen
 
 @Composable
-fun TaskScreen(viewModel: TaskViewModel, navController: NavController, listId: Int) {
+fun TaskScreen(viewModel: TaskViewModel, navController: NavController, listId: Int, innerPadding: PaddingValues) {
     val tasks by viewModel.tasks.observeAsState(listOf())
 
     LaunchedEffect(key1 = listId) {
         viewModel.handleIntent(TaskIntent.LoadTasks(listId))
     }
 
-    Column {
+    Column(modifier = Modifier.padding(innerPadding)) {
         Button(onClick = { navController.navigate(Screen.AddTaskScreen.createRoute(listId)) }) {
             Text(text = "Add Task")
         }

@@ -1,6 +1,7 @@
 package ru.net2fox.trackerapp.ui.task
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -22,11 +23,11 @@ import ru.net2fox.trackerapp.intent.TaskListIntent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddTaskScreen(viewModel: TaskViewModel, navController: NavController, listId: Int) {
+fun AddTaskScreen(viewModel: TaskViewModel, navController: NavController, listId: Int, innerPadding: PaddingValues) {
     var title by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
 
-    Column(modifier = Modifier.padding(16.dp)) {
+    Column(modifier = Modifier.padding(innerPadding).padding(16.dp)) {
         TextField(
             value = title,
             onValueChange = { title = it },

@@ -1,5 +1,6 @@
 package ru.net2fox.trackerapp.ui.navigation
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -25,21 +26,21 @@ sealed class Screen(val route: String) {
 }
 
 @Composable
-fun NavGraph(taskListViewModel: TaskListViewModel, taskViewModel: TaskViewModel, startDestination: String = Screen.TaskListScreen.route) {
+fun NavGraph(taskListViewModel: TaskListViewModel, taskViewModel: TaskViewModel, innerPadding: PaddingValues, startDestination: String = Screen.TaskListScreen.route, ) {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = startDestination) {
         composable(Screen.TaskListScreen.route) {
-            TaskListScreen(taskListViewModel, navController)
+            TaskListScreen(taskListViewModel, navController, innerPadding)
         }
         composable(Screen.AddTaskListScreen.route) {
-            AddTaskListScreen(taskListViewModel, navController)
+            AddTaskListScreen(taskListViewModel, navController, innerPadding)
         }
         composable(Screen.TaskScreen.route, arguments = listOf(navArgument("listId") { type = NavType.IntType })) { backStackEntry ->
-            TaskScreen(taskViewModel, navController, backStackEntry.arguments?.getInt("listId") ?: -1)
+            TaskScreen(taskViewModel, navController, backStackEntry.arguments?.getInt("listId") ?: -1, innerPadding)
         }
         composable(Screen.AddTaskScreen.route, arguments = listOf(navArgument("listId") { type = NavType.IntType })) { backStackEntry ->
-            AddTaskScreen(taskViewModel, navController, backStackEntry.arguments?.getInt("listId") ?: -1)
+            AddTaskScreen(taskViewModel, navController, backStackEntry.arguments?.getInt("listId") ?: -1, innerPadding)
         }
     }
 }

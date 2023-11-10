@@ -48,8 +48,9 @@ class TaskViewModel(private val repository: TaskRepository) : ViewModel() {
 
     fun toggleTaskCompletion(task: Task) {
         viewModelScope.launch {
-            task.isCompleted = !task.isCompleted
-            repository.updateTask(task)
+            //task.isCompleted = !task.isCompleted
+            val updatedTask = task.copy(isCompleted = !task.isCompleted)
+            repository.updateTask(updatedTask)
         }
     }
 }
