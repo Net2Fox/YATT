@@ -1,5 +1,6 @@
 package ru.net2fox.trackerapp.ui.task
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -21,6 +22,7 @@ class TaskViewModel(private val repository: TaskRepository) : ViewModel() {
             is TaskIntent.AddTask -> addTask(intent.task)
             is TaskIntent.UpdateTask -> updateTask(intent.task)
             is TaskIntent.LoadTasks -> loadTasks(intent.listId)
+            is TaskIntent.ToggleTaskCompletion -> toggleTaskCompletion(intent.task)
         }
     }
 
@@ -46,9 +48,8 @@ class TaskViewModel(private val repository: TaskRepository) : ViewModel() {
         }
     }
 
-    fun toggleTaskCompletion(task: Task) {
+    private fun toggleTaskCompletion(task: Task) {
         viewModelScope.launch {
-            //task.isCompleted = !task.isCompleted
             val updatedTask = task.copy(isCompleted = !task.isCompleted)
             repository.updateTask(updatedTask)
         }

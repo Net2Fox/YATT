@@ -1,6 +1,7 @@
 package ru.net2fox.trackerapp
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -30,7 +31,7 @@ class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        Log.d("MainActivity", "hello211")
         val taskListDao = (application as TrackerApp).database.taskListDao()
         val taskListRepository = TaskListRepository(taskListDao)
         val taskListViewModelFactory = TaskListViewModelFactory(taskListRepository)

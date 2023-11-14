@@ -1,6 +1,5 @@
 package ru.net2fox.trackerapp.ui.task
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -37,7 +36,7 @@ fun TaskScreen(viewModel: TaskViewModel, navController: NavController, listId: I
 
         LazyColumn {
             items(tasks) { task ->
-                TaskItem(task = task, onTaskClicked = { viewModel.toggleTaskCompletion(task) })
+                TaskItem(task = task, onTaskClicked = { viewModel.handleIntent(TaskIntent.ToggleTaskCompletion(task)) })
             }
         }
     }
