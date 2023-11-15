@@ -31,16 +31,6 @@ class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("MainActivity", "hello211")
-        val taskListDao = (application as TrackerApp).database.taskListDao()
-        val taskListRepository = TaskListRepository(taskListDao)
-        val taskListViewModelFactory = TaskListViewModelFactory(taskListRepository)
-        val taskListViewModel: TaskListViewModel by viewModels { taskListViewModelFactory }
-
-        val taskDao = (application as TrackerApp).database.taskDao()
-        val taskRepository = TaskRepository(taskDao)
-        val taskViewModelFactory = TaskViewModelFactory(taskRepository)
-        val taskViewModel: TaskViewModel by viewModels { taskViewModelFactory }
 
         setContent {
             TrackerAppTheme {
@@ -58,17 +48,11 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                     ) { innerPadding ->
-                        NavGraph(taskListViewModel, taskViewModel, innerPadding)
+                        NavGraph(application as TrackerApp, innerPadding)
                     }
 
                 }
             }
         }
     }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun MainScreen() {
-
 }

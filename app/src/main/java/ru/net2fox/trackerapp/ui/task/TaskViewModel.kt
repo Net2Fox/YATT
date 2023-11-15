@@ -17,6 +17,7 @@ class TaskViewModel(private val repository: TaskRepository) : ViewModel() {
     private val _tasks = MutableLiveData<List<Task>>()
     val tasks: LiveData<List<Task>> = _tasks
 
+
     fun handleIntent(intent: TaskIntent) {
         when (intent) {
             is TaskIntent.AddTask -> addTask(intent.task)
@@ -29,14 +30,12 @@ class TaskViewModel(private val repository: TaskRepository) : ViewModel() {
     private fun addTask(task: Task) {
         viewModelScope.launch {
             repository.insertTask(task)
-            loadTasks(task.listId) // Refresh the tasks after adding
         }
     }
 
     private fun updateTask(task: Task) {
         viewModelScope.launch {
             repository.updateTask(task)
-            loadTasks(task.listId) // Refresh the tasks after updating
         }
     }
 

@@ -29,7 +29,6 @@ class TaskListViewModel(private val repository: TaskListRepository) : ViewModel(
         viewModelScope.launch {
             val taskList = TaskList(name = name)
             repository.insertTaskList(taskList)
-            loadTaskLists() // Refresh the list after adding
         }
     }
 
