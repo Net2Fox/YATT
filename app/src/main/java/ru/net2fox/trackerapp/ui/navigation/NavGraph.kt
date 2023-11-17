@@ -1,7 +1,5 @@
 package ru.net2fox.trackerapp.ui.navigation
 
-import android.app.Application
-import androidx.activity.viewModels
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -17,14 +15,12 @@ import ru.net2fox.trackerapp.ui.task.AddTaskScreen
 import ru.net2fox.trackerapp.ui.task.TaskScreen
 import ru.net2fox.trackerapp.ui.task.TaskViewModel
 import ru.net2fox.trackerapp.ui.task.TaskViewModelFactory
-import ru.net2fox.trackerapp.ui.tasklist.AddTaskListScreen
 import ru.net2fox.trackerapp.ui.tasklist.TaskListScreen
 import ru.net2fox.trackerapp.ui.tasklist.TaskListViewModel
 import ru.net2fox.trackerapp.ui.tasklist.TaskListViewModelFactory
 
 sealed class Screen(val route: String) {
     object TaskListScreen : Screen("taskListScreen")
-    object AddTaskListScreen : Screen("addTaskListScreen")
     object TaskScreen : Screen("taskScreen/{listId}") {
         fun createRoute(listId: Int) = "taskScreen/$listId"
     }
@@ -42,10 +38,6 @@ fun NavGraph(application: TrackerApp, innerPadding: PaddingValues, startDestinat
         composable(Screen.TaskListScreen.route) {
             val taskListViewModel: TaskListViewModel = viewModel(factory = TaskListViewModelFactory(TaskListRepository(taskListDao)))
             TaskListScreen(taskListViewModel, navController, innerPadding)
-        }
-        composable(Screen.AddTaskListScreen.route) {
-            val taskListViewModel: TaskListViewModel = viewModel(factory = TaskListViewModelFactory(TaskListRepository(taskListDao)))
-            AddTaskListScreen(taskListViewModel, navController, innerPadding)
         }
         composable(Screen.TaskScreen.route, arguments = listOf(navArgument("listId") { type = NavType.IntType })) { backStackEntry ->
             val taskViewModel: TaskViewModel = viewModel(factory = TaskViewModelFactory(TaskRepository(taskDao)))
